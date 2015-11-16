@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="pl.polsl.pum.itshardtorecognizeface" >
+
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".RecognizerActivity"
+            android:label="@string/title_activity_recognizer"
+            android:parentActivityName=".MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="pl.polsl.pum.itshardtorecognizeface.MainActivity" />
+        </activity>
+        <activity
+            android:name=".TrainerActivity"
+            android:label="@string/title_activity_trainer"
+            android:parentActivityName=".MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="pl.polsl.pum.itshardtorecognizeface.MainActivity" />
+        </activity>
+        <activity
+            android:name=".TrainerDatabaseActivity"
+            android:label="@string/title_activity_trainer_database"
+            android:parentActivityName=".TrainerActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="pl.polsl.pum.itshardtorecognizeface.TrainerActivity" />
+        </activity>
+    </application>
+
+</manifest>
