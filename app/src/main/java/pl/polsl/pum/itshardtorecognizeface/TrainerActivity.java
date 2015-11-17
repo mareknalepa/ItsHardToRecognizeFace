@@ -4,23 +4,24 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import org.opencv.core.Mat;
 import org.opencv.core.Scalar;
 
 import java.util.List;
 
-import pl.polsl.pum.itshardtorecognizeface.camera.CameraPreviewActivity;
 import pl.polsl.pum.itshardtorecognizeface.classifier.ClassifierDatabase;
 import pl.polsl.pum.itshardtorecognizeface.classifier.FaceClassifier;
 import pl.polsl.pum.itshardtorecognizeface.model.Face;
 import pl.polsl.pum.itshardtorecognizeface.model.FaceDetector;
 import pl.polsl.pum.itshardtorecognizeface.model.PictureHolder;
 
-public class TrainerActivity extends CameraPreviewActivity {
+public class TrainerActivity extends AppCompatActivity implements CameraPreviewFragment.OnFragmentInteractionListener {
 
     private FaceDetector faceDetector;
     private ClassifierDatabase classifierDatabase;
@@ -29,29 +30,16 @@ public class TrainerActivity extends CameraPreviewActivity {
     private MenuItem menuResetClassifier;
     private MenuItem menuTrainClassifier;
 
-    private List<Face> faces;
+    private Mat lastFrameRgba;
+    private Mat lastFrameGray;
 
-    public TrainerActivity() {
-        super(R.layout.activity_trainer, R.id.cameraPreview);
-        classifierDatabase = new ClassifierDatabase(this);
-    }
+    private List<Face> faces;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-    }
-
-    @Override
-    protected void loaderCallbackExtra() {
-        faceDetector = new FaceDetector(TrainerActivity.this);
-    }
-
-    @Override
-    protected void onCameraFrameExtra() {
-        faces = faceDetector.detectFaces(frameGray);
-        for (Face face : faces) {
-            face.drawOutline(frameProcessed, new Scalar(0, 255, 0, 255), 3);
-        }
+        setContentView(R.layout.activity_trainer);
+        classifierDatabase = new ClassifierDatabase(this);
     }
 
     @Override
@@ -75,12 +63,12 @@ public class TrainerActivity extends CameraPreviewActivity {
     }
 
     public void processPictureClick(View view) {
-        if (frameRgba != null && frameGray != null && !faces.isEmpty()) {
+        if (lastFrameRgba != null && lastFrameGray != null && !faces.isEmpty()) {
             Intent intent = new Intent(this, TrainerDatabaseActivity.class);
 
             PictureHolder ph = PictureHolder.getInstance();
-            ph.setFrameRgba(frameRgba);
-            ph.setFrameGray(frameGray);
+            ph.setFrameRgba(lastFrameRgba);
+            ph.setFrameGray(lastFrameGray);
 
             startActivity(intent);
         }
@@ -130,5 +118,20 @@ public class TrainerActivity extends CameraPreviewActivity {
         FaceClassifier faceClassifier = new FaceClassifier(this);
         faceClassifier.trainClassifier(classifierDatabase);
         faceClassifier.loadClassifier();
+    }
+
+    @Override
+    public void loaderCallbackExtra() {
+        faceDetector = new FaceDetector(TrainerActivity.this);
+    }
+
+    @Override
+    public void onCameraFrameExtra(Mat frameRgba, Mat frameGray, Mat frameProcessed) {
+        lastFrameRgba = frameRgba;
+        lastFrameGray = frameGray;
+        faces = faceDetector.detectFaces(frameGray);
+        for (Face face : faces) {
+            face.drawOutline(frameProcessed, new Scalar(0, 255, 0, 255), 3);
+        }
     }
 }
