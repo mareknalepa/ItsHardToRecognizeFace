@@ -8,5 +8,6 @@
     <string name="title_activity_recognizer">Recognizer</string>
 
     <string name="title_activity_trainer">Trainer</string>
-    <string name="title_activity_trainer_database">Trainer Database</string>
+    <string name="title_activity_trainer_editor">Trainer Database</string>
+    <string name="title_activity_faces_database">Faces Database</string>
 </resources>

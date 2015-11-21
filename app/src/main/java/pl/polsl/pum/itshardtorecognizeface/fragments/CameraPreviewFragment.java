@@ -1,32 +1,24 @@
-package pl.polsl.pum.itshardtorecognizeface;
+package pl.polsl.pum.itshardtorecognizeface.fragments;
 
 import android.app.Activity;
-import android.app.Fragment;
-import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 
-import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.CameraBridgeViewBase;
-import org.opencv.android.LoaderCallbackInterface;
-import org.opencv.android.OpenCVLoader;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 
+import pl.polsl.pum.itshardtorecognizeface.R;
 
-public class CameraPreviewFragment extends Fragment implements CameraBridgeViewBase.CvCameraViewListener2 {
 
-    private Context context;
+public class CameraPreviewFragment extends OpenCVFragment implements CameraBridgeViewBase.CvCameraViewListener2 {
+
     private OnFragmentInteractionListener mListener;
 
     private CameraBridgeViewBase ocvCameraView;
-
-    private Mat frameRgba;
-    private Mat frameGray;
-    private Mat frameProcessed;
 
     public static CameraPreviewFragment newInstance() {
         CameraPreviewFragment fragment = new CameraPreviewFragment();
@@ -72,25 +64,8 @@ public class CameraPreviewFragment extends Fragment implements CameraBridgeViewB
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        BaseLoaderCallback loaderCallback = new BaseLoaderCallback(context) {
-            @Override
-            public void onManagerConnected(int status) {
-                switch (status) {
-                    case LoaderCallbackInterface.SUCCESS: {
-                        mListener.loaderCallbackExtra();
-                        ocvCameraView.enableView();
-                    }
-                    break;
-                    default: {
-                        super.onManagerConnected(status);
-                    }
-                    break;
-                }
-            }
-        };
-        OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_2_4_11, context, loaderCallback);
+    protected void onOpenCVLoadedExtra() {
+        ocvCameraView.enableView();
     }
 
     @Override
@@ -110,33 +85,31 @@ public class CameraPreviewFragment extends Fragment implements CameraBridgeViewB
 
     @Override
     public void onCameraViewStarted(int width, int height) {
-        frameRgba = new Mat();
-        frameGray = new Mat();
     }
 
     @Override
     public void onCameraViewStopped() {
-        frameRgba.release();
-        frameGray.release();
     }
 
     @Override
     public Mat onCameraFrame(CameraBridgeViewBase.CvCameraViewFrame inputFrame) {
-        frameRgba = inputFrame.rgba();
+        Mat frameRgba = inputFrame.rgba();
         Core.flip(frameRgba, frameRgba, -1);
 
-        frameGray = inputFrame.gray();
+        Mat frameGray = inputFrame.gray();
         Core.flip(frameGray, frameGray, -1);
 
-        frameProcessed = frameRgba.clone();
+        Mat frameProcessed = frameRgba.clone();
 
         mListener.onCameraFrameExtra(frameRgba, frameGray, frameProcessed);
+
+        frameRgba.release();
+        frameGray.release();
 
         return frameProcessed;
     }
 
-    public interface OnFragmentInteractionListener {
-        void loaderCallbackExtra();
+    public interface OnFragmentInteractionListener extends OpenCVFragment.OnFragmentInteractionListener {
         void onCameraFrameExtra(Mat frameRgba, Mat frameGray, Mat frameProcessed);
     }
 }

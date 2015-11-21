@@ -9,12 +9,13 @@
         android:required="true" />
 
     <application
+        android:name="pl.polsl.pum.itshardtorecognizeface.App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".MainActivity"
+            android:name=".activities.MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,20 +24,25 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".TrainerActivity"
+            android:name=".activities.TrainerActivity"
             android:label="@string/title_activity_trainer"
-            android:parentActivityName=".MainActivity" >
+            android:parentActivityName=".activities.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="pl.polsl.pum.itshardtorecognizeface.MainActivity" />
+                android:value=".activities.MainActivity" />
         </activity>
         <activity
-            android:name=".TrainerDatabaseActivity"
-            android:label="@string/title_activity_trainer_database"
-            android:parentActivityName=".TrainerActivity" >
+            android:name=".activities.TrainerEditorActivity"
+            android:label="@string/title_activity_trainer_editor"
+            android:parentActivityName=".activities.TrainerActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="pl.polsl.pum.itshardtorecognizeface.TrainerActivity" />
+                android:value=".activities.TrainerActivity" />
+        </activity>
+        <activity
+            android:name=".activities.FacesDatabaseActivity"
+            android:label="@string/title_activity_faces_database"
+            android:parentActivityName=".activities.MainActivity" >
         </activity>
     </application>
 

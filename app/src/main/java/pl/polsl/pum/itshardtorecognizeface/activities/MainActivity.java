@@ -1,4 +1,4 @@
-package pl.polsl.pum.itshardtorecognizeface;
+package pl.polsl.pum.itshardtorecognizeface.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,7 +12,9 @@ import org.opencv.core.Scalar;
 
 import java.util.List;
 
+import pl.polsl.pum.itshardtorecognizeface.R;
 import pl.polsl.pum.itshardtorecognizeface.classifier.FaceClassifier;
+import pl.polsl.pum.itshardtorecognizeface.fragments.CameraPreviewFragment;
 import pl.polsl.pum.itshardtorecognizeface.model.Face;
 import pl.polsl.pum.itshardtorecognizeface.model.FaceDetector;
 
@@ -46,7 +48,8 @@ public class MainActivity extends AppCompatActivity implements CameraPreviewFrag
             Intent intent = new Intent(this, TrainerActivity.class);
             startActivity(intent);
         } else if (item == menuFacesDatabase) {
-
+            Intent intent = new Intent(this, FacesDatabaseActivity.class);
+            startActivity(intent);
         } else if (item == menuAbout) {
             Toast.makeText(getApplicationContext(),
                     "ItsHardToRecognizeFace\nApplication developed at Silesian University of Technology\n2015",
@@ -56,10 +59,9 @@ public class MainActivity extends AppCompatActivity implements CameraPreviewFrag
     }
 
     @Override
-    public void loaderCallbackExtra() {
+    public void onOpenCVLoaded() {
         faceDetector = new FaceDetector(MainActivity.this);
-        faceClassifier = new FaceClassifier(this);
-        faceClassifier.loadClassifier();
+        faceClassifier = FaceClassifier.getInstance();
     }
 
     @Override
