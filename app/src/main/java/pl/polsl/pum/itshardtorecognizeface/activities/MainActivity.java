@@ -25,10 +25,6 @@ public class MainActivity extends AppCompatActivity implements
         CameraPreviewFragment.OnFragmentInteractionListener,
         TextToSpeechFragment.OnFragmentInteractionListener {
 
-    private MenuItem menuTrainer;
-    private MenuItem menuFacesDatabase;
-    private MenuItem menuAbout;
-
     private FaceDetector faceDetector;
     private FaceClassifier faceClassifier;
     private TextToSpeechFragment ttsFragment;
@@ -45,25 +41,33 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        menuTrainer = menu.add("Open trainer");
-        menuFacesDatabase = menu.add("Show faces database");
-        menuAbout = menu.add("About application");
+        getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item == menuTrainer) {
-            Intent intent = new Intent(this, TrainerActivity.class);
-            startActivity(intent);
-        } else if (item == menuFacesDatabase) {
-            Intent intent = new Intent(this, FacesDatabaseActivity.class);
-            startActivity(intent);
-        } else if (item == menuAbout) {
-            Toast.makeText(getApplicationContext(),
-                    "ItsHardToRecognizeFace\nApplication developed at Silesian University of Technology\n2015",
-                    Toast.LENGTH_LONG).show();
+        int id = item.getItemId();
+
+        Intent intent;
+        switch (id) {
+            case R.id.menu_main_trainer:
+                intent = new Intent(this, TrainerActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.menu_main_faces_database:
+                intent = new Intent(this, FacesDatabaseActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.menu_main_about:
+                Toast.makeText(getApplicationContext(),
+                        "ItsHardToRecognizeFace\nApplication developed at Silesian University of Technology\n2015",
+                        Toast.LENGTH_LONG).show();
+                break;
+            default:
+                return super.onOptionsItemSelected(item);
         }
+
         return true;
     }
 

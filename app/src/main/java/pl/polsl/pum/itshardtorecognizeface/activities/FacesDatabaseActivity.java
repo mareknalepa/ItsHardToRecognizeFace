@@ -11,8 +11,8 @@ import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import pl.polsl.pum.itshardtorecognizeface.adapters.FacesDatabaseAdapter;
 import pl.polsl.pum.itshardtorecognizeface.R;
+import pl.polsl.pum.itshardtorecognizeface.adapters.FacesDatabaseAdapter;
 import pl.polsl.pum.itshardtorecognizeface.classifier.FaceClassifier;
 import pl.polsl.pum.itshardtorecognizeface.fragments.OpenCVFragment;
 import pl.polsl.pum.itshardtorecognizeface.model.FacesDatabase;
@@ -20,9 +20,6 @@ import pl.polsl.pum.itshardtorecognizeface.model.FacesDatabase;
 public class FacesDatabaseActivity extends AppCompatActivity implements OpenCVFragment.OnFragmentInteractionListener {
 
     private ListView listView;
-    private MenuItem menuTrainer;
-    private MenuItem menuStatus;
-    private MenuItem menuClear;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,28 +33,33 @@ public class FacesDatabaseActivity extends AppCompatActivity implements OpenCVFr
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        menuTrainer = menu.add("Open trainer");
-        menuStatus = menu.add("Show status");
-        menuClear = menu.add("Clear database");
+        getMenuInflater().inflate(R.menu.menu_faces_database, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item == menuTrainer) {
-            Intent intent = new Intent(this, TrainerActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(intent);
-            finish();
-            return true;
-        } else if (item == menuStatus) {
-            showStatus();
-            return true;
-        } else if (item == menuClear) {
-            clearDatabase();
-            return true;
+        int id = item.getItemId();
+
+        Intent intent;
+        switch (id) {
+            case R.id.menu_faces_database_trainer:
+                intent = new Intent(this, TrainerActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                finish();
+                break;
+            case R.id.menu_faces_database_status:
+                showStatus();
+                break;
+            case R.id.menu_faces_database_clear:
+                clearDatabase();
+                break;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-        return super.onOptionsItemSelected(item);
+
+        return true;
     }
 
     private void showStatus() {

@@ -21,8 +21,6 @@ public class TrainerActivity extends AppCompatActivity implements CameraPreviewF
 
     private FaceDetector faceDetector;
 
-    private MenuItem menuFacesDatabase;
-
     private Mat lastFrameRgba;
     private Mat lastFrameGray;
 
@@ -36,20 +34,27 @@ public class TrainerActivity extends AppCompatActivity implements CameraPreviewF
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        menuFacesDatabase = menu.add("Show faces database");
+        getMenuInflater().inflate(R.menu.menu_trainer, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item == menuFacesDatabase) {
-            Intent intent = new Intent(this, FacesDatabaseActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(intent);
-            finish();
-            return true;
+        int id = item.getItemId();
+
+        Intent intent;
+        switch (id) {
+            case R.id.menu_trainer_faces_database:
+                intent = new Intent(this, FacesDatabaseActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                finish();
+                break;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-        return super.onOptionsItemSelected(item);
+
+        return true;
     }
 
     public void processPictureClick(View view) {

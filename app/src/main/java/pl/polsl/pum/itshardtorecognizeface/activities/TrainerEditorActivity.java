@@ -4,6 +4,8 @@ import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -43,6 +45,31 @@ public class TrainerEditorActivity extends AppCompatActivity implements OpenCVFr
 
         FragmentManager fm = getFragmentManager();
         fm.beginTransaction().add(new OpenCVFragment(), "OpenCVFragment").commit();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_trainer_editor, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        Intent intent;
+        switch (id) {
+            case R.id.menu_trainer_editor_faces_database:
+                intent = new Intent(this, FacesDatabaseActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                finish();
+                break;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+
+        return true;
     }
 
     public void addToDatabaseClick(View view) {
