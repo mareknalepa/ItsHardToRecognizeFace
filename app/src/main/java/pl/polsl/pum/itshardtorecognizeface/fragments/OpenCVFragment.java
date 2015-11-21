@@ -2,7 +2,6 @@ package pl.polsl.pum.itshardtorecognizeface.fragments;
 
 import android.app.Activity;
 import android.app.Fragment;
-import android.content.Context;
 import android.os.Bundle;
 
 import org.opencv.android.BaseLoaderCallback;
@@ -11,7 +10,6 @@ import org.opencv.android.OpenCVLoader;
 
 public class OpenCVFragment extends Fragment {
 
-    protected Context context;
     private OnFragmentInteractionListener mListener;
 
     public static OpenCVFragment newInstance() {
@@ -24,7 +22,6 @@ public class OpenCVFragment extends Fragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        context = activity;
         try {
             mListener = (OnFragmentInteractionListener) activity;
         } catch (ClassCastException e) {
@@ -42,7 +39,7 @@ public class OpenCVFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        BaseLoaderCallback loaderCallback = new BaseLoaderCallback(context) {
+        BaseLoaderCallback loaderCallback = new BaseLoaderCallback(getActivity()) {
             @Override
             public void onManagerConnected(int status) {
                 switch (status) {
@@ -58,7 +55,7 @@ public class OpenCVFragment extends Fragment {
                 }
             }
         };
-        OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_2_4_11, context, loaderCallback);
+        OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_2_4_11, getActivity(), loaderCallback);
     }
 
     protected void onOpenCVLoadedExtra() {

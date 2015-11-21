@@ -45,7 +45,6 @@ public class CameraPreviewFragment extends OpenCVFragment implements CameraBridg
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        context = activity;
         try {
             mListener = (OnFragmentInteractionListener) activity;
         } catch (ClassCastException e) {
@@ -76,6 +75,7 @@ public class CameraPreviewFragment extends OpenCVFragment implements CameraBridg
         }
     }
 
+    @Override
     public void onDestroy() {
         super.onDestroy();
         if (ocvCameraView != null) {

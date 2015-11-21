@@ -1,5 +1,6 @@
 package pl.polsl.pum.itshardtorecognizeface.activities;
 
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -15,11 +16,14 @@ import java.util.List;
 import pl.polsl.pum.itshardtorecognizeface.R;
 import pl.polsl.pum.itshardtorecognizeface.classifier.FaceClassifier;
 import pl.polsl.pum.itshardtorecognizeface.fragments.CameraPreviewFragment;
+import pl.polsl.pum.itshardtorecognizeface.fragments.TextToSpeechFragment;
 import pl.polsl.pum.itshardtorecognizeface.model.Face;
 import pl.polsl.pum.itshardtorecognizeface.model.FaceDetector;
 
 
-public class MainActivity extends AppCompatActivity implements CameraPreviewFragment.OnFragmentInteractionListener {
+public class MainActivity extends AppCompatActivity implements
+        CameraPreviewFragment.OnFragmentInteractionListener,
+        TextToSpeechFragment.OnFragmentInteractionListener {
 
     private MenuItem menuTrainer;
     private MenuItem menuFacesDatabase;
@@ -27,11 +31,16 @@ public class MainActivity extends AppCompatActivity implements CameraPreviewFrag
 
     private FaceDetector faceDetector;
     private FaceClassifier faceClassifier;
+    private TextToSpeechFragment ttsFragment;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        FragmentManager fm = getFragmentManager();
+        ttsFragment = new TextToSpeechFragment();
+        fm.beginTransaction().add(ttsFragment, "TextToSpeechFragment").commit();
     }
 
     @Override
@@ -73,5 +82,10 @@ public class MainActivity extends AppCompatActivity implements CameraPreviewFrag
             String label = faceClassifier.recognizeFace(faceImage);
             face.drawLabel(frameProcessed, label, new Scalar(0, 255, 0, 255));
         }
+    }
+
+    @Override
+    public void onTtsActive() {
+        ttsFragment.say("Welcome to \"It's hard to recognize face\" application!");
     }
 }
