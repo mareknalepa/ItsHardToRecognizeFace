@@ -4,14 +4,14 @@
 
     <item
         android:id="@+id/menu_faces_database_trainer"
-        android:title="Open trainer" />
+        android:title="@string/menu_faces_database_trainer" />
 
     <item
         android:id="@+id/menu_faces_database_status"
-        android:title="Show status" />
+        android:title="@string/menu_faces_database_status" />
 
     <item
         android:id="@+id/menu_faces_database_clear"
-        android:title="Clear database" />
+        android:title="@string/menu_faces_database_clear" />
 
 </menu>

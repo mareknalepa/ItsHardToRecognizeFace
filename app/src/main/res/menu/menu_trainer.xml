@@ -4,6 +4,6 @@
 
     <item
         android:id="@+id/menu_trainer_faces_database"
-        android:title="Show faces database" />
+        android:title="@string/menu_trainer_faces_database" />
 
 </menu>

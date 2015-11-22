@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 import pl.polsl.pum.itshardtorecognizeface.App;
+import pl.polsl.pum.itshardtorecognizeface.R;
 import pl.polsl.pum.itshardtorecognizeface.model.FacesDatabase;
 import pl.polsl.pum.itshardtorecognizeface.model.FacesDatabaseEntry;
 
@@ -117,7 +118,7 @@ public class FaceClassifier {
                 return labelsMap.get(predicted);
             }
         }
-        return "Unknown";
+        return context.getResources().getString(R.string.label_unknown);
     }
 
     private void writeLabelsFile() {

@@ -16,7 +16,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Add to database"
+        android:text="@string/action_add_to_database"
         android:id="@+id/addToDatabaseButton"
         android:onClick="addToDatabaseClick"
         android:layout_alignParentBottom="true"

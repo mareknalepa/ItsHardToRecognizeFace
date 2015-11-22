@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.FragmentManager;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -65,12 +66,17 @@ public class FacesDatabaseActivity extends AppCompatActivity implements OpenCVFr
     private void showStatus() {
         FacesDatabase fd = FacesDatabase.getInstance();
         FaceClassifier fc = FaceClassifier.getInstance();
-        String text = "Database contains " + fd.getLabelsNumber() + " different persons with " +
-                fd.getImagesNumber() + " images altogether.\n";
+
+        Resources res = getResources();
+        int labels = fd.getLabelsNumber();
+        int images = fd.getImagesNumber();
+        String text = res.getQuantityString(R.plurals.text_faces_database_status_classes, labels, labels);
+        text += " " + res.getQuantityString(R.plurals.text_faces_database_status_images, images, images);
+
         if (fc.classifierTrained()) {
-            text += "Classifier trained with " + fc.classesNumber() + " different classes.";
+            text += String.format(getString(R.string.text_faces_database_status_classifier_trained), fc.classesNumber());
         } else {
-            text += "Classifier not trained.";
+            text += getString(R.string.text_faces_database_status_classifier_not_trained);
         }
         Toast.makeText(this, text, Toast.LENGTH_LONG).show();
     }
@@ -85,9 +91,9 @@ public class FacesDatabaseActivity extends AppCompatActivity implements OpenCVFr
             }
         };
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Are you sure want to permanently delete all faces stored in database?");
-        builder.setPositiveButton("Yes", dialogClickListener);
-        builder.setNegativeButton("No", dialogClickListener);
+        builder.setMessage(R.string.text_faces_database_delete_confirm);
+        builder.setPositiveButton(R.string.text_yes, dialogClickListener);
+        builder.setNegativeButton(R.string.text_no, dialogClickListener);
         builder.show();
     }
 

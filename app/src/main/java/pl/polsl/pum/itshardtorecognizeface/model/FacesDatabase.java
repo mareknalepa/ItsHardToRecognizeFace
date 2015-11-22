@@ -53,6 +53,8 @@ public class FacesDatabase {
         }
         if (entries.size() >= 2 && allEntriesHasImages()) {
             FaceClassifier.getInstance().trainClassifier(this);
+        } else {
+            FaceClassifier.getInstance().clearClassifier();
         }
     }
 

@@ -1,13 +1,47 @@
 <resources>
-    <string name="app_name">ItsHardToRecognizeFace</string>
-
-    <string name="action_start_recognizer">Start Recognizer</string>
-    <string name="action_open_trainer">Open Trainer</string>
-
-    <string name="action_settings">Settings</string>
-    <string name="title_activity_recognizer">Recognizer</string>
+    <string name="app_name" translatable="false">ItsHardToRecognizeFace</string>
 
     <string name="title_activity_trainer">Trainer</string>
     <string name="title_activity_trainer_editor">Trainer Database</string>
     <string name="title_activity_faces_database">Faces Database</string>
+
+    <string name="menu_main_trainer">Open trainer</string>
+    <string name="menu_main_faces_database">Show faces database</string>
+    <string name="menu_main_about">About application</string>
+
+    <string name="menu_trainer_faces_database">Show faces database</string>
+
+    <string name="menu_trainer_editor_faces_database">Show faces database</string>
+
+    <string name="menu_faces_database_trainer">Open trainer</string>
+    <string name="menu_faces_database_status">Show status</string>
+    <string name="menu_faces_database_clear">Clear database</string>
+
+    <string name="action_process_picture">Process picture</string>
+    <string name="action_add_to_database">Add to database</string>
+
+    <string name="label_unknown">Unknown</string>
+
+    <string name="text_yes">Yes</string>
+    <string name="text_no">No</string>
+
+    <string name="text_about">ItsHardToRecognizeFace\nApplication developed at Silesian University of Technology\n2015</string>
+    <string name="text_voice_welcome">Welcome to \"It\'s hard to recognize face\" application!</string>
+
+    <string name="text_trainer_editor_invalid">You have to fill in all fields.\nOnly letters are acceptable.</string>
+
+    <string name="text_faces_database_delete_confirm">Are you sure want to permanently delete all faces stored in database?</string>
+
+    <plurals name="text_faces_database_status_classes">
+        <item quantity="one">Database contains %d person</item>
+        <item quantity="other">Database contains %d different persons</item>
+    </plurals>
+
+    <plurals name="text_faces_database_status_images">
+        <item quantity="one">with %d image.\n</item>
+        <item quantity="other">with %d images altogether.\n</item>
+    </plurals>
+
+    <string name="text_faces_database_status_classifier_trained">Classifier trained with %d different classes.</string>
+    <string name="text_faces_database_status_classifier_not_trained">Classifier not trained.</string>
 </resources>

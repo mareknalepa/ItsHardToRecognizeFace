@@ -60,9 +60,7 @@ public class MainActivity extends AppCompatActivity implements
                 startActivity(intent);
                 break;
             case R.id.menu_main_about:
-                Toast.makeText(getApplicationContext(),
-                        "ItsHardToRecognizeFace\nApplication developed at Silesian University of Technology\n2015",
-                        Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), R.string.text_about, Toast.LENGTH_LONG).show();
                 break;
             default:
                 return super.onOptionsItemSelected(item);
@@ -90,6 +88,6 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public void onTtsActive() {
-        ttsFragment.say("Welcome to \"It's hard to recognize face\" application!");
+        ttsFragment.say(getString(R.string.text_voice_welcome));
     }
 }

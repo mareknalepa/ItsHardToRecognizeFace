@@ -74,7 +74,7 @@ public class TrainerEditorActivity extends AppCompatActivity implements OpenCVFr
 
     public void addToDatabaseClick(View view) {
         if (!formIsValid()) {
-            Toast.makeText(this, "You have to fill in all fields.\nOnly letters are acceptable.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.text_trainer_editor_invalid, Toast.LENGTH_SHORT).show();
             return;
         }
         for (int i = 0; i < labels.size(); ++i) {
