@@ -60,6 +60,9 @@ public class TextToSpeechFragment extends Fragment implements TextToSpeech.OnIni
                 tts.setLanguage(Locale.US);
             }
             ttsActive = true;
+            if (mListener != null) {
+                mListener.onTtsActive();
+            }
         }
     }
 
@@ -83,7 +86,9 @@ public class TextToSpeechFragment extends Fragment implements TextToSpeech.OnIni
     @Override
     public void onDestroy() {
         super.onDestroy();
-        tts.shutdown();
+        if (tts != null) {
+            tts.shutdown();
+        }
     }
 
     @SuppressLint("NewApi")

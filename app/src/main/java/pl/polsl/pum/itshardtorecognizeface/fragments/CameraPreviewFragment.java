@@ -99,17 +99,14 @@ public class CameraPreviewFragment extends OpenCVFragment implements CameraBridg
         Mat frameGray = inputFrame.gray();
         Core.flip(frameGray, frameGray, -1);
 
-        Mat frameProcessed = frameRgba.clone();
+        if (mListener != null) {
+            return mListener.onCameraFrameExtra(frameRgba, frameGray);
+        }
 
-        mListener.onCameraFrameExtra(frameRgba, frameGray, frameProcessed);
-
-        frameRgba.release();
-        frameGray.release();
-
-        return frameProcessed;
+        return frameRgba;
     }
 
     public interface OnFragmentInteractionListener extends OpenCVFragment.OnFragmentInteractionListener {
-        void onCameraFrameExtra(Mat frameRgba, Mat frameGray, Mat frameProcessed);
+        Mat onCameraFrameExtra(Mat frameRgba, Mat frameGray);
     }
 }

@@ -22,7 +22,6 @@ public class TrainerActivity extends AppCompatActivity implements CameraPreviewF
     private FaceDetector faceDetector;
 
     private Mat lastFrameRgba;
-    private Mat lastFrameGray;
 
     private List<Face> faces;
 
@@ -58,13 +57,11 @@ public class TrainerActivity extends AppCompatActivity implements CameraPreviewF
     }
 
     public void processPictureClick(View view) {
-        if (lastFrameRgba != null && lastFrameGray != null && !faces.isEmpty()) {
+        if (lastFrameRgba != null && !faces.isEmpty()) {
             Intent intent = new Intent(this, TrainerEditorActivity.class);
 
             long frameRgbaAddr = lastFrameRgba.getNativeObjAddr();
-            long frameGrayAddr = lastFrameGray.getNativeObjAddr();
             intent.putExtra("frameRgbaAddr", frameRgbaAddr);
-            intent.putExtra("frameGrayAddr", frameGrayAddr);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
             startActivity(intent);
@@ -78,12 +75,12 @@ public class TrainerActivity extends AppCompatActivity implements CameraPreviewF
     }
 
     @Override
-    public void onCameraFrameExtra(Mat frameRgba, Mat frameGray, Mat frameProcessed) {
+    public Mat onCameraFrameExtra(Mat frameRgba, Mat frameGray) {
         lastFrameRgba = frameRgba.clone();
-        lastFrameGray = frameGray.clone();
         faces = faceDetector.detectFaces(frameGray);
         for (Face face : faces) {
-            face.drawOutline(frameProcessed, new Scalar(0, 255, 0, 255), 3);
+            face.drawOutline(frameRgba, new Scalar(0, 255, 0, 255), 3);
         }
+        return frameRgba;
     }
 }

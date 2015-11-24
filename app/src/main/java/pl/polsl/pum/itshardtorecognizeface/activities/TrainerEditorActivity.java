@@ -11,6 +11,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import org.opencv.core.Mat;
+import org.opencv.imgproc.Imgproc;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -103,11 +104,10 @@ public class TrainerEditorActivity extends AppCompatActivity implements OpenCVFr
 
         Intent intent = getIntent();
         long frameRgbaAddr = intent.getLongExtra("frameRgbaAddr", 0);
-        long frameGrayAddr = intent.getLongExtra("frameGrayAddr", 0);
         Mat temp = new Mat(frameRgbaAddr);
         frameRgba = temp.clone();
-        temp = new Mat(frameGrayAddr);
-        frameGray = temp.clone();
+        frameGray = frameRgba.clone();
+        Imgproc.cvtColor(frameRgba, frameGray, Imgproc.COLOR_BGR2GRAY);
 
         faces = faceDetector.detectFaces(frameGray);
         for (int i = 0; i < faces.size(); ++i) {

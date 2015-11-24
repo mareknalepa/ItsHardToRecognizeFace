@@ -76,14 +76,15 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void onCameraFrameExtra(Mat frameRgba, Mat frameGray, Mat frameProcessed) {
+    public Mat onCameraFrameExtra(Mat frameRgba, Mat frameGray) {
         List<Face> faces = faceDetector.detectFaces(frameGray);
         for (Face face : faces) {
-            face.drawOutline(frameProcessed, new Scalar(0, 255, 0, 255), 3);
+            face.drawOutline(frameRgba, new Scalar(0, 255, 0, 255), 3);
             Mat faceImage = face.extractRoi(frameGray);
             String label = faceClassifier.recognizeFace(faceImage);
-            face.drawLabel(frameProcessed, label, new Scalar(0, 255, 0, 255));
+            face.drawLabel(frameRgba, label, new Scalar(0, 255, 0, 255));
         }
+        return frameRgba;
     }
 
     @Override

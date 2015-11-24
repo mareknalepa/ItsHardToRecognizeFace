@@ -45,7 +45,9 @@ public class OpenCVFragment extends Fragment {
                 switch (status) {
                     case LoaderCallbackInterface.SUCCESS: {
                         onOpenCVLoadedExtra();
-                        mListener.onOpenCVLoaded();
+                        if (mListener != null) {
+                            mListener.onOpenCVLoaded();
+                        }
                     }
                     break;
                     default: {
