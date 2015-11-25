@@ -1,0 +1,38 @@
+<resources>
+    <string name="action_add_to_database">Dodaj do bazy twarzy</string>
+    <string name="action_process_picture">Przetwórz obraz</string>
+    <string name="context_menu_faces_database_remove">Usuń z bazy twarzy</string>
+    <string name="label_unknown">Nieznany</string>
+    <string name="menu_faces_database_clear">Wyczyść bazę twarzy</string>
+    <string name="menu_faces_database_status">Pokaż stan</string>
+    <string name="menu_faces_database_trainer">Otwórz trenera</string>
+    <string name="menu_main_about">O aplikacji</string>
+    <string name="menu_main_faces_database">Pokaż bazę twarzy</string>
+    <string name="menu_main_trainer">Otwórz trenera</string>
+    <string name="menu_trainer_editor_faces_database">Pokaż bazę twarzy</string>
+    <string name="menu_trainer_faces_database">Pokaż bazę twarzy</string>
+    <string name="text_about">ItsHardToRecognizeFace\nAplikacja rozwijana na Politechnice Śląskiej w ramach projektu studenckiego\n2015</string>
+    <string name="text_faces_database_clear_confirm">Czy na pewno chcesz trwale usunąć wszystkie twarze z bazy twarzy?</string>
+    <string name="text_faces_database_remove_confirm">Czy na pewno chcesz trwale usunąć tę osobę z bazy twarzy?</string>
+    <string name="text_faces_database_status_classifier_not_trained">Klasyfikator nie nauczony.</string>
+    <string name="text_faces_database_status_classifier_trained">Klasyfikator nauczony %d różnymi klasami.</string>
+    <string name="text_no">Nie</string>
+    <string name="text_trainer_editor_invalid">Musisz wypełnić wszystkie pola.\nTylko litery są dozwolone.</string>
+    <string name="text_voice_welcome">Witamy w aplikacji!</string>
+    <string name="text_yes">Tak</string>
+    <string name="title_activity_faces_database">Baza twarzy</string>
+    <string name="title_activity_trainer">Trener</string>
+    <string name="title_activity_trainer_editor">Trener - edytor</string>
+    <plurals name="text_faces_database_status_classes">
+        <item quantity="one">Baza twarzy zawiera %d osobę</item>
+        <item quantity="few">Baza twarzy zwiera %d osoby</item>
+        <item quantity="many">Baza twarzy zawiera %d osób</item>
+        <item quantity="other">Baza twarzy zawiera %d osób</item>
+    </plurals>
+    <plurals name="text_faces_database_status_images">
+        <item quantity="one">z %d zdjęciem.\n</item>
+        <item quantity="few">z %d zdjęciami.\n</item>
+        <item quantity="many">z %d zdjęciami.\n</item>
+        <item quantity="other">z %d zdjęciami.\n</item>
+    </plurals>
+</resources>
