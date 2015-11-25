@@ -88,6 +88,8 @@ public class TextToSpeechFragment extends Fragment implements TextToSpeech.OnIni
         super.onDestroy();
         if (tts != null) {
             tts.shutdown();
+            tts = null;
+            ttsActive = false;
         }
     }
 

@@ -161,6 +161,35 @@ public class FacesDatabase {
 
     public void delete(FacesDatabaseEntry entry) {
         entries.remove(entry);
+        ArrayList<String> lines = new ArrayList<>();
+        FileInputStream fis;
+        try {
+            fis = context.openFileInput(IMAGES_LIST_FILE);
+            BufferedReader br = new BufferedReader(new InputStreamReader(fis));
+            String line = br.readLine();
+            while (line != null) {
+                String[] parts = line.split("[;]");
+                if (!parts[0].equals(entry.getLabel())) {
+                    lines.add(line);
+                } else {
+                    context.deleteFile(parts[1]);
+                }
+                line = br.readLine();
+            }
+            br.close();
+            fis.close();
+        } catch (java.io.IOException e) {
+        }
+        FileOutputStream fos;
+        try {
+            fos = context.openFileOutput(IMAGES_LIST_FILE, Context.MODE_PRIVATE);
+            for (String line : lines) {
+                String contents = line + System.getProperty("line.separator");
+                fos.write(contents.getBytes());
+            }
+            fos.close();
+        } catch (java.io.IOException e) {
+        }
         onDatabaseChanged();
     }
 

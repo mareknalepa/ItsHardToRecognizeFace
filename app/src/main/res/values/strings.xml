@@ -2,7 +2,7 @@
     <string name="app_name" translatable="false">ItsHardToRecognizeFace</string>
 
     <string name="title_activity_trainer">Trainer</string>
-    <string name="title_activity_trainer_editor">Trainer Database</string>
+    <string name="title_activity_trainer_editor">Trainer Editor</string>
     <string name="title_activity_faces_database">Faces Database</string>
 
     <string name="menu_main_trainer">Open trainer</string>
@@ -17,6 +17,8 @@
     <string name="menu_faces_database_status">Show status</string>
     <string name="menu_faces_database_clear">Clear database</string>
 
+    <string name="context_menu_faces_database_remove">Remove from database</string>
+
     <string name="action_process_picture">Process picture</string>
     <string name="action_add_to_database">Add to database</string>
 
@@ -30,7 +32,8 @@
 
     <string name="text_trainer_editor_invalid">You have to fill in all fields.\nOnly letters are acceptable.</string>
 
-    <string name="text_faces_database_delete_confirm">Are you sure want to permanently delete all faces stored in database?</string>
+    <string name="text_faces_database_clear_confirm">Are you sure want to permanently delete all faces stored in database?</string>
+    <string name="text_faces_database_remove_confirm">Are you sure want to permanently remove this person from database?</string>
 
     <plurals name="text_faces_database_status_classes">
         <item quantity="one">Database contains %d person</item>

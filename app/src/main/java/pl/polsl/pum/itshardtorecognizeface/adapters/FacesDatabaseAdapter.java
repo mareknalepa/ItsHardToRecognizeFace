@@ -18,6 +18,7 @@ public class FacesDatabaseAdapter extends BaseAdapter {
 
     private Context context;
     private FacesDatabase facesDatabase;
+    private int positionInvalid = 999;
 
     public FacesDatabaseAdapter(Context context) {
         this.context = context;
@@ -42,7 +43,7 @@ public class FacesDatabaseAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        if (convertView == null) {
+        if (convertView == null || position >= positionInvalid) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.listview_faces_database, parent, false);
 
@@ -59,7 +60,19 @@ public class FacesDatabaseAdapter extends BaseAdapter {
                 imageView.setImageBitmap(bitmap);
                 gridLayout.addView(imageView);
             }
+
+            if (position == positionInvalid) {
+                ++positionInvalid;
+            }
         }
         return convertView;
+    }
+
+    public void remove(int position) {
+        FacesDatabaseEntry entry = (FacesDatabaseEntry) getItem(position);
+        facesDatabase.delete(entry);
+        positionInvalid = position;
+        notifyDataSetChanged();
+        notifyDataSetInvalidated();
     }
 }
