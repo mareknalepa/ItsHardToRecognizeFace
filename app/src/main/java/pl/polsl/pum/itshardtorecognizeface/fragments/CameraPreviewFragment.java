@@ -1,6 +1,7 @@
 package pl.polsl.pum.itshardtorecognizeface.fragments;
 
 import android.app.Activity;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,7 +9,6 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 
 import org.opencv.android.CameraBridgeViewBase;
-import org.opencv.core.Core;
 import org.opencv.core.Mat;
 
 import pl.polsl.pum.itshardtorecognizeface.R;
@@ -19,13 +19,6 @@ public class CameraPreviewFragment extends OpenCVFragment implements CameraBridg
     private OnFragmentInteractionListener mListener;
 
     private CameraBridgeViewBase ocvCameraView;
-
-    public static CameraPreviewFragment newInstance() {
-        CameraPreviewFragment fragment = new CameraPreviewFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -63,6 +56,16 @@ public class CameraPreviewFragment extends OpenCVFragment implements CameraBridg
     }
 
     @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+
+        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
+
+        }
+    }
+
+    @Override
     protected void onOpenCVLoadedExtra() {
         ocvCameraView.enableView();
     }
@@ -94,10 +97,10 @@ public class CameraPreviewFragment extends OpenCVFragment implements CameraBridg
     @Override
     public Mat onCameraFrame(CameraBridgeViewBase.CvCameraViewFrame inputFrame) {
         Mat frameRgba = inputFrame.rgba();
-        Core.flip(frameRgba, frameRgba, -1);
+        //Core.flip(frameRgba, frameRgba, -1);
 
         Mat frameGray = inputFrame.gray();
-        Core.flip(frameGray, frameGray, -1);
+        //Core.flip(frameGray, frameGray, -1);
 
         if (mListener != null) {
             return mListener.onCameraFrameExtra(frameRgba, frameGray);

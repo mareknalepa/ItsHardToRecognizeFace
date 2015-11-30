@@ -2,7 +2,6 @@ package pl.polsl.pum.itshardtorecognizeface.fragments;
 
 import android.app.Activity;
 import android.app.Fragment;
-import android.os.Bundle;
 
 import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.LoaderCallbackInterface;
@@ -11,13 +10,6 @@ import org.opencv.android.OpenCVLoader;
 public class OpenCVFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
-
-    public static OpenCVFragment newInstance() {
-        OpenCVFragment fragment = new OpenCVFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override
     public void onAttach(Activity activity) {

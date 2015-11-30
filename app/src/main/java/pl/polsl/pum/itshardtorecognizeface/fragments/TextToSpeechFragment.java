@@ -18,13 +18,6 @@ public class TextToSpeechFragment extends Fragment implements TextToSpeech.OnIni
     private int utterance = 0;
     private boolean ttsActive = false;
 
-    public static TextToSpeechFragment newInstance() {
-        TextToSpeechFragment fragment = new TextToSpeechFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,7 +88,7 @@ public class TextToSpeechFragment extends Fragment implements TextToSpeech.OnIni
 
     @SuppressLint("NewApi")
     public void say(String text) {
-        if (ttsActive && !tts.isSpeaking()) {
+        if (tts != null && ttsActive && !tts.isSpeaking()) {
             tts.speak(text, TextToSpeech.QUEUE_FLUSH, null, "" + utterance++);
         }
     }

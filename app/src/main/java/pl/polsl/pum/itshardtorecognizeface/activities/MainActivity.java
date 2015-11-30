@@ -11,7 +11,10 @@ import android.widget.Toast;
 import org.opencv.core.Mat;
 import org.opencv.core.Scalar;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import pl.polsl.pum.itshardtorecognizeface.R;
 import pl.polsl.pum.itshardtorecognizeface.classifier.FaceClassifier;
@@ -27,6 +30,8 @@ public class MainActivity extends AppCompatActivity implements
 
     private FaceDetector faceDetector;
     private FaceClassifier faceClassifier;
+    private HashMap<String, Integer> facesHistory;
+    private List<String> facesInFrame;
     private TextToSpeechFragment ttsFragment;
 
     @Override
@@ -73,16 +78,32 @@ public class MainActivity extends AppCompatActivity implements
     public void onOpenCVLoaded() {
         faceDetector = new FaceDetector(MainActivity.this);
         faceClassifier = FaceClassifier.getInstance();
+        facesHistory = new HashMap<>();
+        facesInFrame = new ArrayList<>();
     }
 
     @Override
     public Mat onCameraFrameExtra(Mat frameRgba, Mat frameGray) {
+        facesInFrame.clear();
         List<Face> faces = faceDetector.detectFaces(frameGray);
         for (Face face : faces) {
             face.drawOutline(frameRgba, new Scalar(0, 255, 0, 255), 3);
             Mat faceImage = face.extractRoi(frameGray);
             String label = faceClassifier.recognizeFace(faceImage);
             face.drawLabel(frameRgba, label, new Scalar(0, 255, 0, 255));
+            if (!facesHistory.containsKey(label)) {
+                ttsFragment.say(label);
+                facesHistory.put(label, 200);
+            }
+            facesInFrame.add(label);
+        }
+        for (Map.Entry<String, Integer> facesHistoryEntry : facesHistory.entrySet()) {
+            if (!facesInFrame.contains(facesHistoryEntry.getKey())) {
+                facesHistoryEntry.setValue(facesHistoryEntry.getValue() - 1);
+                if (facesHistoryEntry.getValue() <= 0) {
+                    facesHistory.remove(facesHistoryEntry.getKey());
+                }
+            }
         }
         return frameRgba;
     }
