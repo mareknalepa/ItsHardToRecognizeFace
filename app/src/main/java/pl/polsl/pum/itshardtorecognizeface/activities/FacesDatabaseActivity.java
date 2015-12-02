@@ -57,7 +57,6 @@ public class FacesDatabaseActivity extends AppCompatActivity implements
                 intent = new Intent(this, TrainerActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
-                finish();
                 break;
             case R.id.menu_faces_database_status:
                 showStatus();

@@ -11,6 +11,8 @@ public class App extends Application {
         return context;
     }
 
+    public static boolean welcomeSaid = false;
+
     @Override
     public void onCreate() {
         super.onCreate();

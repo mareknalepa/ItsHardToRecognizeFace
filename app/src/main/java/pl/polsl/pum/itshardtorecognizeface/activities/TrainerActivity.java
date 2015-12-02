@@ -47,7 +47,6 @@ public class TrainerActivity extends AppCompatActivity implements CameraPreviewF
                 intent = new Intent(this, FacesDatabaseActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
-                finish();
                 break;
             default:
                 return super.onOptionsItemSelected(item);
@@ -65,7 +64,6 @@ public class TrainerActivity extends AppCompatActivity implements CameraPreviewF
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
             startActivity(intent);
-            finish();
         }
     }
 

@@ -37,6 +37,8 @@ public class JavaCameraView extends CameraBridgeViewBase implements PreviewCallb
     private Thread mThread;
     private boolean mStopThread;
 
+    private int previewFormat = ImageFormat.NV21;
+
     protected Camera mCamera;
     protected JavaCameraFrame[] mCameraFrame;
     private SurfaceTexture mSurfaceTexture;
@@ -157,8 +159,14 @@ public class JavaCameraView extends CameraBridgeViewBase implements PreviewCallb
                         params.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_VIDEO);
                     }
 
+                    // "generic" = android emulator
+                    if (Build.BRAND.equalsIgnoreCase("generic")) {
+                        params.setPreviewFormat(ImageFormat.YV12);
+                    }
+
                     mCamera.setParameters(params);
                     params = mCamera.getParameters();
+                    previewFormat = params.getPreviewFormat();
 
                     mFrameWidth = params.getPreviewSize().width;
                     mFrameHeight = params.getPreviewSize().height;
@@ -301,7 +309,12 @@ public class JavaCameraView extends CameraBridgeViewBase implements PreviewCallb
 
         @Override
         public Mat rgba() {
-            Imgproc.cvtColor(mYuvFrameData, mRgba, Imgproc.COLOR_YUV2RGBA_NV21, 4);
+            if (previewFormat == ImageFormat.NV21) {
+                Imgproc.cvtColor(mYuvFrameData, mRgba, Imgproc.COLOR_YUV2RGBA_NV21, 4);
+            }
+            else if (previewFormat == ImageFormat.YV12) {
+                Imgproc.cvtColor(mYuvFrameData, mRgba, Imgproc.COLOR_YUV2RGB_I420, 4);  // COLOR_YUV2RGBA_YV12 produces inverted colors
+            }
             return mRgba;
         }
 

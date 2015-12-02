@@ -16,6 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import pl.polsl.pum.itshardtorecognizeface.App;
 import pl.polsl.pum.itshardtorecognizeface.R;
 import pl.polsl.pum.itshardtorecognizeface.classifier.FaceClassifier;
 import pl.polsl.pum.itshardtorecognizeface.fragments.CameraPreviewFragment;
@@ -58,10 +59,12 @@ public class MainActivity extends AppCompatActivity implements
         switch (id) {
             case R.id.menu_main_trainer:
                 intent = new Intent(this, TrainerActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
                 break;
             case R.id.menu_main_faces_database:
                 intent = new Intent(this, FacesDatabaseActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
                 break;
             case R.id.menu_main_about:
@@ -92,24 +95,34 @@ public class MainActivity extends AppCompatActivity implements
             String label = faceClassifier.recognizeFace(faceImage);
             face.drawLabel(frameRgba, label, new Scalar(0, 255, 0, 255));
             if (!facesHistory.containsKey(label)) {
-                ttsFragment.say(label);
-                facesHistory.put(label, 200);
+                facesHistory.put(label, 100);
             }
             facesInFrame.add(label);
         }
+        HashMap<String, Integer> newFacesHistory = new HashMap<>();
         for (Map.Entry<String, Integer> facesHistoryEntry : facesHistory.entrySet()) {
-            if (!facesInFrame.contains(facesHistoryEntry.getKey())) {
+            if (facesInFrame.contains(facesHistoryEntry.getKey())) {
+                facesHistoryEntry.setValue(facesHistoryEntry.getValue() + 5);
+            } else {
                 facesHistoryEntry.setValue(facesHistoryEntry.getValue() - 1);
-                if (facesHistoryEntry.getValue() <= 0) {
-                    facesHistory.remove(facesHistoryEntry.getKey());
-                }
+            }
+            if (facesHistoryEntry.getValue() > 250) {
+                ttsFragment.say(facesHistoryEntry.getKey());
+                facesHistoryEntry.setValue(facesHistoryEntry.getValue() - 200);
+            }
+            if (facesHistoryEntry.getValue() > 0) {
+                newFacesHistory.put(facesHistoryEntry.getKey(), facesHistoryEntry.getValue());
             }
         }
+        facesHistory = newFacesHistory;
         return frameRgba;
     }
 
     @Override
     public void onTtsActive() {
-        ttsFragment.say(getString(R.string.text_voice_welcome));
+        if (!App.welcomeSaid) {
+            ttsFragment.say(getString(R.string.text_voice_welcome));
+            App.welcomeSaid = true;
+        }
     }
 }

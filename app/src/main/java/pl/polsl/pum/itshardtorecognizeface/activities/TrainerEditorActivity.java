@@ -64,7 +64,6 @@ public class TrainerEditorActivity extends AppCompatActivity implements OpenCVFr
                 intent = new Intent(this, FacesDatabaseActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
-                finish();
                 break;
             default:
                 return super.onOptionsItemSelected(item);
@@ -83,10 +82,11 @@ public class TrainerEditorActivity extends AppCompatActivity implements OpenCVFr
             fde.addFrame(faces.get(i).extractRoi(frameRgba));
             FacesDatabase.getInstance().add(fde);
         }
+        faces.clear();
+        labels.clear();
         Intent intent = new Intent(this, FacesDatabaseActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
-        finish();
     }
 
     private boolean formIsValid() {
@@ -110,6 +110,7 @@ public class TrainerEditorActivity extends AppCompatActivity implements OpenCVFr
         Imgproc.cvtColor(frameRgba, frameGray, Imgproc.COLOR_BGR2GRAY);
 
         faces = faceDetector.detectFaces(frameGray);
+        labels.clear();
         for (int i = 0; i < faces.size(); ++i) {
             labels.add("");
         }
